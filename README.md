@@ -1,4 +1,6 @@
-## This is the code for reinforcement learning project for the course CMPUT609.
+# This repo holds the code for Qsigma project.
+
+## For now, it gathers all the original code for the reinforcement learning project in the course CMPUT609.
 **Team members: Zichen Zhang, Kristopher De Asis.**
 
 ├── README.md     : this file  
