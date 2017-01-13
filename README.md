@@ -3,7 +3,8 @@
 ## For now, it gathers all the original code for the reinforcement learning project in the course CMPUT609.
 **Team members: Vincent (Zichen) Zhang, Kristopher De Asis.**
 
-├── README.md     : this file  
+├── README.md     : this file
+├── trading-sampling-taking_KrisAsis_and_VincentZhang.pdf: Report
 ├── MDPy.py       : base module for MDP  
 ├── agent.py      : base module for agent  
 ├── Qsigma.py     : module for Q(sigma) agent  
