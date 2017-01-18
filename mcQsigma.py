@@ -14,7 +14,7 @@ class QSigma:
     # num actions
     self._n_actions = 3
     # tilecoder
-    tilings = 20
+    tilings = 25
     dims = [16, 16]
     lims = [(-1.2, 0.5), (-0.07, 0.07)]
     self._Q = [0] * self._n_actions
@@ -107,7 +107,7 @@ def example():
   import matplotlib.pyplot as plt
   from mpl_toolkits.mplot3d import Axes3D
 
-  agent = QSigma(3, 1.0, 0.1, 0.5)
+  agent = QSigma(3, 0.5, 0.1, 0.5)
   for episode in range(100):
     R = agent.episode(1.0, 10000)
     print('episode ', episode + 1, 'reward ', R)
