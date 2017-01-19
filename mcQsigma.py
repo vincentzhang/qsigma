@@ -7,10 +7,11 @@ from multitilecoding import multitilecoder
 import mountaincar
 
 class QSigma:
-  def __init__(self, steps=1, init_sigma=1.0, epsilon=0.1, step_size=0.1):
+  def __init__(self, steps=1, init_sigma=1.0, epsilon=0.1, step_size=0.1, beta=1.0):
     # Qsigma parameters
     self._n = steps
-    self._init_sigma = init_sigma
+    self._sig = init_sigma
+    self._beta = beta
     # num actions
     self._n_actions = 3
     # tilecoder
@@ -36,6 +37,7 @@ class QSigma:
     self._sigma = [0.0] * self._n
     while (self._tau != (self._T - 1)) and (self._time < max_steps):
       action = self.act(action, discount)
+    self._sig *= self._beta
     return self._r_sum
 
   def act(self, action, discount):
@@ -50,8 +52,9 @@ class QSigma:
         else: # commit the next action
             action = self.pick_action(sp) # select arbitrarily and store an action as A_(t+1)
             self._Qt[(self._time + 1)%(self._n+1)] = self._Q[sp, action] # Store Q(St+1;At+1) as Qt+1
-            self._sigma[(self._time+1)%self._n] = self._init_sigma
-            self._delta[self._time%self._n] = r - self._Qt[self._time%(self._n+1)] + discount*((1-self._sigma[(self._time+1)%self._n]) * self.expected_Q(sp) + self._sigma[(self._time+1)%self._n] * self._Q[sp, action])
+            self._sigma[(self._time+1)%self._n] = self._sig
+            self._delta[self._time%self._n] = r - self._Qt[self._time%(self._n+1)] + \
+              discount*((1-self._sigma[(self._time+1)%self._n]) * self.expected_Q(sp) + self._sigma[(self._time+1)%self._n] * self._Q[sp, action])
             self._pi[(self._time+1)%self._n] = self.get_action_probability(sp, action)
         self._s = sp # update agent state
     self._tau = self._time + 1 - self._n # time whose estimate is being updated
@@ -105,14 +108,23 @@ def example():
   import matplotlib.pyplot as plt
   from mpl_toolkits.mplot3d import Axes3D
 
-  agent = QSigma(3, 0.5, 0.1, 0.5)
-  for episode in range(100):
-    R = agent.episode(1.0, 10000)
-    print('episode ', episode + 1, 'reward ', R)
-    #agent._init_sigma *= 0.9
+  n_runs = 10
+  n_eps = 100
+  ep_avg_R = 0.0
+  avg_R = 0.0
+
+  for run in range(1, n_runs + 1):
+    agent = QSigma(3, 0.5, 0.1, 0.7, 1.0)
+    for episode in range(1, n_eps + 1):
+      R = agent.episode(1.0, 10000)
+      ep_avg_R += (1 / episode) * (R - ep_avg_R)
+      print('episode:', episode, 'sigma:', round(agent._sig / 0.95, 2), 'reward:', R)
+    print('run:', run, 'mean reward:', ep_avg_R)
+    avg_R += (1 / run) * (ep_avg_R - avg_R)
+  print('overall avg reward:', avg_R)
 
   print('mapping function...')
-  res = 100
+  res = 200
   x = np.arange(-1.2, 0.5, (0.5 + 1.2) / res)
   y = np.arange(-0.07, 0.07, (0.07 + 0.07) / res)
   z = np.zeros([len(y), len(x)])
