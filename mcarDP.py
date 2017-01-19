@@ -9,15 +9,15 @@ from MDPy import MDP
 
 # set precision and value limits
 pos_precision = 2
-vel_precision = 3
+vel_precision = 4
 pos_limits = [-1.2, 0.49]
 vel_limits = [-0.07, 0.07]
 
 # build state space
 pos_delta = 10 ** -pos_precision
 vel_delta = 10 ** -vel_precision
-pos_range = np.round(np.linspace(pos_limits[0], pos_limits[1], (pos_limits[1] - pos_limits[0]) / pos_delta + 1), pos_precision)
-vel_range = np.round(np.linspace(vel_limits[0], vel_limits[1], (vel_limits[1] - vel_limits[0]) / vel_delta + 1), vel_precision)
+pos_range = np.round(np.linspace(pos_limits[0], pos_limits[1], np.round((pos_limits[1] - pos_limits[0]) / pos_delta + 1)), pos_precision)
+vel_range = np.round(np.linspace(vel_limits[0], vel_limits[1], np.round((vel_limits[1] - vel_limits[0]) / vel_delta + 1)), vel_precision)
 
 # mdp size
 n_states = len(pos_range) * len(vel_range)
@@ -49,10 +49,12 @@ for p in pos_range:
       R, sp = mountaincar.sample(s, a)
       mcar.add_transition(state_id(s), a, (state_id(sp), R, 1.0))
 
+# compute values
 print('solving mdp...')
 V = mcar.value_iteration(1.0)
 
-print('plotting...')
+# map values for plotting
+print('mapping function...')
 x = pos_range
 y = vel_range
 plot_V = np.zeros([len(y), len(x)])
