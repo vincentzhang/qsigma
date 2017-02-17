@@ -15,10 +15,11 @@ class QSigma:
     # num actions
     self._n_actions = 3
     # tilecoder
-    tilings = 5
+    tilings = 8
     dims = [8, 8]
     lims = [(-1.2, 0.5), (-0.07, 0.07)]
-    self._Q = multitilecoder(self._n_actions, dims, lims, tilings, step_size)
+    offset_vec = [1, 3]
+    self._Q = multitilecoder(self._n_actions, dims, lims, tilings, step_size, offset_vec)
     # eps greedy
     self._eps = epsilon
 

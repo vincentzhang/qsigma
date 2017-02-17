@@ -24,9 +24,6 @@ def sample(S,A):
     if position >= 0.5:
         return R,None
     if position < -1.2:
-        #position = -1.2
-        #velocity = 0.0
-        position = -0.6 + random()*0.2
+        position = -1.2
         velocity = 0.0
-        R = -100
     return R,(position,velocity)
