@@ -14,7 +14,6 @@ eps = np.arange(1, 101)
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-ax.set_title('Random Walk RMS Error')
 ax.set_xlabel('Episodes')
 ax.set_ylabel('RMS Error')
 
