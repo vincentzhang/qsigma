@@ -17,10 +17,13 @@ ax = fig.add_subplot(111)
 ax.set_xlabel('Episodes')
 ax.set_ylabel('RMS Error')
 
-ni = 2
+ni = 1
 ai = 3
-for i in range(len(sigmas) - 1):
-  ax.plot(eps, rmse.mean(3)[ni][ai][i][1:51], label='σ = ' + str(sigmas[i]))
-ax.plot(eps, rmsed.mean(3)[ni][ai][0][1:51], label='β = 0.9')
+ax.plot(eps, rmse.mean(3)[ni][ai][0][1:51], label='Tree-backup')
+ax.plot(eps, rmse.mean(3)[ni][ai][1][1:51], label='Q(σ) (σ=0.25)')
+ax.plot(eps, rmse.mean(3)[ni][ai][2][1:51], label='Q(σ) (σ=0.5)')
+ax.plot(eps, rmse.mean(3)[ni][ai][3][1:51], label='Q(σ) (σ=0.75)')
+ax.plot(eps, rmse.mean(3)[ni][ai][4][1:51], label='Sarsa')
+ax.plot(eps, rmsed.mean(3)[ni][ai][0][1:51], label='Decaying σ')
 ax.legend()
 plt.show()
