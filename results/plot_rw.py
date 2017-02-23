@@ -12,18 +12,20 @@ sigmas = [0.0, 0.25, 0.5, 0.75, 1.0,]
 #[steps, alpha, sigma, run, ep]
 eps = np.arange(1, 51)
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.set_xlabel('Episodes')
-ax.set_ylabel('RMS Error')
+#fig = plt.figure()
+#ax = fig.add_subplot(111)
+#ax.set_xlabel('Episodes')
+#ax.set_ylabel('RMS Error')
 
 ni = 1
 ai = 3
-ax.plot(eps, rmse.mean(3)[ni][ai][0][1:51], label='Tree-backup')
-ax.plot(eps, rmse.mean(3)[ni][ai][1][1:51], label='Q(σ) (σ=0.25)')
-ax.plot(eps, rmse.mean(3)[ni][ai][2][1:51], label='Q(σ) (σ=0.5)')
-ax.plot(eps, rmse.mean(3)[ni][ai][3][1:51], label='Q(σ) (σ=0.75)')
-ax.plot(eps, rmse.mean(3)[ni][ai][4][1:51], label='Sarsa')
-ax.plot(eps, rmsed.mean(3)[ni][ai][0][1:51], label='Decaying σ')
-ax.legend()
+plt.plot(eps, rmse.mean(3)[ni][ai][0][1:51], color='#790F5B', label='Q(0), Tree-backup')
+plt.plot(eps, rmse.mean(3)[ni][ai][1][1:51], color='#FF0000', label='Q(0.25)')
+plt.plot(eps, rmse.mean(3)[ni][ai][2][1:51], color='#2A8FBD', label='Q(0.5)')
+plt.plot(eps, rmse.mean(3)[ni][ai][3][1:51], color='#FF00FF', label='Q(0.75)')
+plt.plot(eps, rmse.mean(3)[ni][ai][4][1:51], color='#333333', label='Q(1), Sarsa')
+plt.plot(eps, rmsed.mean(3)[ni][ai][0][1:51], color='#7FAF1B', label='Dynamic σ')
+plt.xlabel('Episodes', size=14)
+plt.ylabel('RMS Error', size=14)
+plt.legend()
 plt.show()
