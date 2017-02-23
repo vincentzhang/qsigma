@@ -27,5 +27,6 @@ plt.plot(eps, rmse.mean(3)[ni][ai][4][1:51], color='#7FAF1B', label='Q(1), Sarsa
 plt.plot(eps, rmsed.mean(3)[ni][ai][0][1:51], color='#574951', label='Dynamic σ')
 plt.xlabel('Episodes', size=14)
 plt.ylabel('RMS Error', size=14)
+plt.axis([1, 50, 0, 0.25])
 plt.legend()
 plt.show()
