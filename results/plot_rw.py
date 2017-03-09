@@ -18,7 +18,7 @@ eps = np.arange(1, 51)
 #ax.set_ylabel('RMS Error')
 
 ni = 1
-ai = 3
+ai = 2
 plt.plot(eps, rmse.mean(3)[ni][ai][0][1:51], color='#FBB829', label='Q(0), Tree-backup')
 plt.plot(eps, rmse.mean(3)[ni][ai][1][1:51], color='#FF0000', label='Q(0.25)')
 plt.plot(eps, rmse.mean(3)[ni][ai][2][1:51], color='#2A8FBD', label='Q(0.5)')
